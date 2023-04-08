@@ -86,7 +86,7 @@ def show_predict_page():
     st.title("Sentiment Analysis")
 
     # Get the path of the folder containing the speeches
-    folder_path = "./speech_chunks"
+    folder_path = "./speech_app"
 
     # Get the names of the files in the folder
 # Get the names of the files in the folder
@@ -110,7 +110,9 @@ def show_predict_page():
         ax.set_xlabel("Section")
         ax.set_title("Sentiment Analysis Results")
         st.pyplot(fig)
-
+        # Display a table with the sentiment scores for each point
+        st.write("Sentiment Scores:")
+        st.write(pd.DataFrame(groups, columns=["Section", "Score", "Label"]))
 
 
 if __name__ == '__main__':
