@@ -89,30 +89,35 @@ def show_predict_page():
     folder_path = "./speech_app"
 
     # Get the names of the files in the folder
-# Get the names of the files in the folder
     filenames = os.listdir(folder_path)
 
-# Modify filenames to remove ".csv" and replace underscores with spaces
+    # Modify filenames to remove ".csv" and replace underscores with spaces
     file_options = [filename[:-4].replace('_', ' ') for filename in filenames]
 
-# Add a dropdown to select the file
-    selected_filename = st.selectbox("Select a speech file", file_options)
+    # Add a dropdown to select the file
+    selected_filename = st.selectbox("Select a speech", file_options)
 
-# If a file is selected, display the sentiment analysis results
-    if selected_filename:
-        file_path = os.path.join(folder_path, filenames[file_options.index(selected_filename)])
-        groups = sentiment_analysis(file_path)
-        fig, ax = plt.subplots()
-        ax.plot([g[0] for g in groups], [g[1] for g in groups])
-        ax.set_xticks([g[0] for g in groups])
-        ax.set_xticklabels([f"Section {g[0]}" for g in groups])
-        ax.set_ylabel("Sentiment Score")
-        ax.set_xlabel("Section")
-        ax.set_title("Sentiment Analysis Results")
-        st.pyplot(fig)
-        # Display a table with the sentiment scores for each point
-        st.write("Sentiment Scores:")
-        st.write(pd.DataFrame(groups, columns=["Section", "Score", "Label"]))
+    # Add a button to start the sentiment analysis
+    if st.button("Analyze Sentiment"):
+        # If a file is selected, display the sentiment analysis results
+        if selected_filename:
+            file_path = os.path.join(folder_path, filenames[file_options.index(selected_filename)])
+            groups = sentiment_analysis(file_path)
+            fig, ax = plt.subplots()
+            ax.plot([g[0] for g in groups], [g[1] for g in groups])
+            ax.set_xticks([g[0] for g in groups])
+            ax.set_xticklabels([f"Section {g[0]}" for g in groups])
+            ax.set_yticks([1, 0, -1])
+            uniform_values = [1,0,-1]
+            ax.set_yticklabels(uniform_values)
+            ax.set_ylabel("Sentiment Score")
+            ax.set_xlabel("Section")
+            ax.set_title("Sentiment Analysis Results")
+            st.pyplot(fig)
+            # Display a table with the sentiment scores for each point
+            st.write("Sentiment Scores:")
+            st.write(pd.DataFrame(groups, columns=["Section", "Score", "Label"]))
+
 
 
 if __name__ == '__main__':
