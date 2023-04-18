@@ -1,0 +1,9 @@
+{
+    "BERT_MODEL": "bert-base-cased",
+    "PRE_TRAINED_MODEL": "assets/best_model.pth",
+    "CLASS_NAMES": [
+        "negative",
+        "positive"
+    ],
+    "MAX_SEQUENCE_LEN": 160
+}
