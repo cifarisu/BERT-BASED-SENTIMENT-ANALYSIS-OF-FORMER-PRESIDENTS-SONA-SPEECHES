@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import os
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from model import SentimentClassifier
 from transformers import BertForSequenceClassification, BertTokenizer
@@ -103,20 +104,45 @@ def show_predict_page():
         if selected_filename:
             file_path = os.path.join(folder_path, filenames[file_options.index(selected_filename)])
             groups = sentiment_analysis(file_path)
-            fig, ax = plt.subplots()
-            ax.plot([g[0] for g in groups], [g[1] for g in groups])
-            ax.set_xticks([g[0] for g in groups])
-            ax.set_xticklabels([f"Section {g[0]}" for g in groups])
-            ax.set_yticks([1, 0, -1])
-            uniform_values = [1,0,-1]
-            ax.set_yticklabels(uniform_values)
-            ax.set_ylabel("Sentiment Score")
-            ax.set_xlabel("Section")
-            ax.set_title("Sentiment Analysis Results")
-            st.pyplot(fig)
-            # Display a table with the sentiment scores for each point
-            st.write("Sentiment Scores:")
-            st.write(pd.DataFrame(groups, columns=["Section", "Score", "Label"]))
+        # Set style and context for the plot
+        sns.set_style("whitegrid")
+        sns.set_context("talk")
+
+        # Create figure and axis objects
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Plot the sentiment scores
+        ax.plot([g[0] for g in groups], [g[1] for g in groups], color="#ff7f50", linewidth=3)
+
+        # Add a horizontal line at y=0
+        ax.axhline(y=0, color="#95a5a6", linestyle="-", linewidth=2)
+        
+        # Set x-axis labels
+        ax.set_xticks([g[0] for g in groups])
+        ax.set_xticklabels([f"{g[0]}" for g in groups], fontsize=14)
+
+        # Set y-axis labels
+        uniform_values = [1, 0, -1]
+        ax.set_yticks(uniform_values)
+        ax.set_yticklabels(uniform_values, fontsize=14, color="white")
+        ax.set_ylabel("Sentiment Score", fontsize=16, color="white")
+
+        # Set axis titles and title
+        ax.set_xlabel("Section", fontsize=16, color="white")
+        ax.set_title("Sentiment Analysis Results", fontsize=20, color="white")
+
+        # Remove grid lines and set background to transparent
+        fig.patch.set_facecolor('none')
+        ax.grid(False)
+        fig.patch.set_alpha(0.0)
+
+        # Show plot
+        st.pyplot(fig)
+
+
+        # Display a table with the sentiment scores for each point
+        st.write("Sentiment Scores:")
+        st.write(pd.DataFrame(groups, columns=["Section", "Score", "Label"]))
 
 
 
