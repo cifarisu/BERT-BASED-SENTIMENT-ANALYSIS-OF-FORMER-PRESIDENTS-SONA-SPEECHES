@@ -9,6 +9,8 @@ import seaborn as sns
 from model import SentimentClassifier
 from transformers import BertForSequenceClassification, BertTokenizer
 
+from streamlit.components.v1 import components
+
 # check if CUDA is available
 if torch.cuda.is_available():
     device = torch.device('cuda')
@@ -86,6 +88,39 @@ def sentiment_analysis(file):
 def show_predict_page():
     st.title("Sentiment Analysis")
 
+
+    # Define a function to read the HTML file and return it as a string
+    def read_html_file(file_path):
+        with open(file_path, 'r', encoding='utf-8') as f:
+            html_string = f.read()
+        return html_string
+
+    # Get the path of the folder containing the speeches
+    folder_path = "./fullspeech"
+
+    # Get the names of the HTML files in the folder
+    filenames = [filename for filename in os.listdir(folder_path) if filename.endswith(".html")]
+
+    # Remove the ".html" extension from the filenames
+    file_options = [filename[:-5] for filename in filenames]
+
+    # Add a dropdown to select the file
+    selected_filename = st.selectbox("Choose Speech to Display", file_options)
+
+    # Get the file path for the selected file
+    file_path = os.path.join(folder_path, selected_filename + ".html")
+
+    # Read the HTML file as a string
+    html_string = read_html_file(file_path)
+
+    # Create an expandable container for the embedded webpage
+    with st.expander("Show/Hide"):
+        # Embed the webpage in the Streamlit app
+        st.components.v1.html(html_string, height=800, scrolling=True)
+
+
+
+
     # Get the path of the folder containing the speeches
     folder_path = "./speech_app"
 
@@ -96,7 +131,7 @@ def show_predict_page():
     file_options = [filename[:-4].replace('_', ' ') for filename in filenames]
 
     # Add a dropdown to select the file
-    selected_filename = st.selectbox("Select a speech", file_options)
+    selected_filename = st.selectbox("Select a Speech to be Analyzed", file_options)
 
     # Add a button to start the sentiment analysis
     if st.button("Analyze Sentiment"):
@@ -116,10 +151,17 @@ def show_predict_page():
 
         # Add a horizontal line at y=0
         ax.axhline(y=0, color="#95a5a6", linestyle="-", linewidth=2)
+
+        # Add points to the plot
+        ax.scatter([g[0] for g in groups], [g[1] for g in groups], color="#2980b9", s=50)
         
+        # Add labels to each point
+        #for g in groups:
+        #ax.text(g[0], g[1], f"{g[1]:.2f}", ha='center', va='bottom', fontsize=12, color="red")
+
         # Set x-axis labels
         ax.set_xticks([g[0] for g in groups])
-        ax.set_xticklabels([f"{g[0]}" for g in groups], fontsize=14)
+        ax.set_xticklabels([f"{g[0]}" for g in groups], fontsize=14, color="white")
 
         # Set y-axis labels
         uniform_values = [1, 0, -1]
