@@ -134,10 +134,11 @@ def show_predict_page():
     selected_filename = st.selectbox("Select a Speech to be Analyzed", file_options)
 
     # Add a button to start the sentiment analysis
-    if st.button("Analyze Sentiment"):
+    if st.button("Analyze Speech"):
         # If a file is selected, display the sentiment analysis results
         if selected_filename:
             file_path = os.path.join(folder_path, filenames[file_options.index(selected_filename)])
+            st.markdown("Analyzing Speech. This may take a few minutes...")
             groups = sentiment_analysis(file_path)
         # Set style and context for the plot
         sns.set_style("whitegrid")
