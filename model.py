@@ -48,4 +48,4 @@ class SentimentClassifier(nn.Module):
         output = self.out(output)  # add this line to include the missing keys
         return output
     
-model = SentimentClassifier(3)
+model = SentimentClassifier(2)

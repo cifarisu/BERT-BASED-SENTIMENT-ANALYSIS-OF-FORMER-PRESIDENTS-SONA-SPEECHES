@@ -4,7 +4,6 @@ import numpy as np
 import torch
 import os
 import matplotlib.pyplot as plt
-
 from model import SentimentClassifier
 from transformers import BertForSequenceClassification, BertTokenizer
 
@@ -14,12 +13,13 @@ if torch.cuda.is_available():
 else:
     device = torch.device('cpu')
 
+model = SentimentClassifier(2)
 model = BertForSequenceClassification.from_pretrained('bert-base-cased')
 model.load_state_dict(torch.load('best_model.pth', map_location=torch.device('cpu')), strict=False)
 model.eval()
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
-target_names = ['NEGATIVE', 'POSITIVE']
+target_names = ['POSITIVE', 'NEGATIVE']
 MAX_LEN = 160
 
 # Assuming you have already defined `tokenizer`, `model`, `device`, and `target_names`
