@@ -23,7 +23,7 @@ model.load_state_dict(torch.load('best_model.pth', map_location=torch.device('cp
 model.eval()
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
-target_names = ['POSITIVE', 'NEGATIVE']
+target_names = ['NEGATIVE', 'POSITIVE']
 MAX_LEN = 160
 
 # Assuming you have already defined `tokenizer`, `model`, `device`, and `target_names`
