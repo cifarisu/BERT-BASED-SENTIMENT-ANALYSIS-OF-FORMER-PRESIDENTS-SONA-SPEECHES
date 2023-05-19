@@ -123,7 +123,7 @@ def show_predict_page():
 
 
     # Get the path of the folder containing the speeches
-    folder_path = "./speech_app"
+    folder_path = "./allspeech"
 
     # Get the names of the files in the folder
     filenames = os.listdir(folder_path)
