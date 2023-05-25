@@ -97,19 +97,8 @@ def show_sentence_prediction():
     if st.button("Analyze Sentiment", key='analyze_sentiment_button'):
         # If a sentence is entered, display the sentiment analysis results
         if sentence:
-            result = predict_sentiment(sentence)
-            sentiment = result['sentiment']
-            confidence = result['confidence']
-            probabilities = result['probabilities']
-
-            # Display sentiment label and confidence score
-            st.markdown(f"**Sentiment**: {sentiment}")
-            st.markdown(f"**Confidence**: {confidence:}")
-
-            # Display probabilities for each sentiment
-            st.markdown("**Probabilities:**")
-            st.markdown(f"- Negative: {probabilities['negative']}")
-            st.markdown(f"- Positive: {probabilities['positive']}")
+                    result = predict_sentiment(sentence)
+                    st.write(result)
 
 
 if __name__ == '__main__':
