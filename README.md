@@ -9,7 +9,7 @@ A system for sentiment analysis of State of the Nation Address (SONA) speeches g
 * Jessa Lorenza Sabas
 
 
-About
+# About
 This project was developed as a partial completion for Software Engineering 2 (CS 116) at Bicol University. The system aims to analyze the sentiment expressed in the speeches of the four previous presidents of the Philippines: Estrada, Arroyo, Aquino, and Duterte.
 
 # Features
